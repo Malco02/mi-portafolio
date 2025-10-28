@@ -1,8 +1,8 @@
 {
   "name": "mi-portafolio",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
-  "homepage": "https://malco02.github.io/mi-portafolio",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

@@ -5,8 +5,8 @@ const projects = [
   {
     title: "CARGO TRACK",
     subtitle: "Trazabilidad y optimización de procesos en tiempo real",
-    mainImage: "/images/cargo-track-main.jpg",
-    sideImages: ["/images/cargo-track-1.jpg", "/images/cargo-track-2.jpg"],
+    mainImage: "images/cargo-track-main.jpg",
+    sideImages: ["images/cargo-track-1.jpg", "images/cargo-track-2.jpg"],
     description: [
       "Cargo Track es una solución desarrollada para la trazabilidad y optimización de procesos operativos en tiempo real. Permite monitorear el avance de cada carga, generar alertas automáticas ante demoras o incidencias, y brindar visibilidad completa de los procesos desde la recepción hasta la entrega.",
       "El proyecto integra fuentes de datos de distintas áreas mediante AppSheet, Power BI y Google Sheets, actualizando indicadores en tiempo real gracias a scripts automatizados con JavaScript. Su implementación mejoró la eficiencia operativa y la toma de decisiones dentro de la organización.",
@@ -15,8 +15,8 @@ const projects = [
   {
     title: "DASHBOARD OPERATIVO",
     subtitle: "Visualización y análisis de datos en tiempo real",
-    mainImage: "/images/dashboard-main.jpg",
-    sideImages: ["/images/dashboard-1.jpg", "/images/dashboard-2.jpg"],
+    mainImage: "images/dashboard-main.jpg",
+    sideImages: [{ src: "images/dashboard-1.jpg", type: "image" },{ src: "videos/dashboard-demo.mp4", type: "video" }],
     description: [
       "Dashboard operativo diseñado para centralizar información de distintas áreas, facilitando la toma de decisiones y la monitorización de KPIs clave.",
       "Se implementó integración con Excel, Power BI y scripts automáticos que actualizan la información en tiempo real, optimizando los procesos de seguimiento y control.",
@@ -70,15 +70,25 @@ export default function ProjectTabs() {
             />
           </div>
           <div className="md:w-[30%] flex flex-col gap-5">
-            {project.sideImages.map((img, i) => (
-              <img
-                key={i}
-                src={img}
-                alt={`${project.title} detalle ${i + 1}`}
-                className="rounded-2xl w-full h-[180px] object-cover shadow-lg"
-              />
+            {project.sideImages.map((item, i) => (
+              item.type === "video" ? (
+                <video
+                  key={i}
+                  src={item.src}
+                  controls
+                  className="rounded-2xl w-full h-[180px] object-cover shadow-lg"
+                />
+              ) : (
+                <img
+                  key={i}
+                  src={item.src}
+                  alt={`${project.title} detalle ${i + 1}`}
+                  className="rounded-2xl w-full h-[180px] object-cover shadow-lg"
+                />
+              )
             ))}
           </div>
+
         </div>
 
         {/* --- Descripción --- */}

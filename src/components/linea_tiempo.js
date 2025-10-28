@@ -6,7 +6,7 @@ const academicItems = [
     title: "Bachiller en Ingeniería Industrial",
     institution: "Universidad Nacional del Callao",
     years: "2020 – 2024",
-    image: "/certificados/unac-bachiller.jpg",
+    image: "certificados/unac-bachiller.jpg",
   },
 ];
 
