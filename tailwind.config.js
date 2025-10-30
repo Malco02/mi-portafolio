@@ -9,15 +9,17 @@ module.exports = {
     'text-heroText',
     'bg-primary',
     'text-primaryText',
+    'bg-colorfondo'
   ],
   theme: {
     extend: {
       colors: {
-        heroBg: '#0d3855',/* ✅ azul oscuro fondo */ 
-        heroText: '#ff553f',/* ✅ arcilla para letra */ 
-        primary: '#A4A3F5',
+        heroBg: '#152c59ff',/* ✅ azul oscuro fondo */ 
+        heroText: '#2980e7',/* ✅ arcilla para letra */ 
+        primary: '#02dba6',
         primaryText: '#132d46',
-        rojoletra: '#F44336'
+        rojoletra: '#02dba6',
+        colorfondo: '#ffffff',
       },
     },
   },

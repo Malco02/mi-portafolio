@@ -7,7 +7,8 @@ export default function Footer() {
       <p className="mb-4">¡Gracias por la visita!</p>
       <div className="flex justify-center gap-6 mb-4">
         <a 
-          href="https://www.linkedin.com/in/tu-perfil" 
+          // 🚀 LinkedIn ACTUALIZADO
+          href="https://www.linkedin.com/in/malco-flores-giraldo-4a719b254" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="text-blue-400 hover:text-blue-600 transition-colors"
@@ -15,7 +16,8 @@ export default function Footer() {
           LinkedIn
         </a>
         <a 
-          href="https://github.com/tu-usuario" 
+          // 🐙 GitHub ACTUALIZADO
+          href="https://github.com/Malco02" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="text-gray-300 hover:text-white transition-colors"
@@ -23,13 +25,13 @@ export default function Footer() {
           GitHub
         </a>
         <a 
+          // 📧 Email ACTUALIZADO
           href="mailto:malco02u@gmail.com" 
           className="text-blue-400  hover:text-green-600 transition-colors"
         >
           Email
         </a>
       </div>
-      <p className="text-sm text-gray-500">Creado con ❤️ y React</p>
     </footer>
   );
 }

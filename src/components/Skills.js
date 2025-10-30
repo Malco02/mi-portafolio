@@ -1,6 +1,7 @@
+// 1. Importa 'motion' y quita los hooks (useState, useEffect, useRef)
 import React from 'react';
+import { motion } from 'framer-motion';
 import { FaStar } from 'react-icons/fa';
-
 
 const skillsData = [
   {
@@ -31,7 +32,48 @@ const skillsData = [
   },
 ];
 
+// --- VARIANTES DE ANIMACIÓN ---
+
+// 2. Variante para el contenedor del grid (escalona las tarjetas)
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15, // Cada tarjeta aparecerá con 0.15s de retraso
+    },
+  },
+};
+
+// 3. Variante para cada tarjeta (escalona su contenido interno)
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 100,
+      damping: 12,
+      staggerChildren: 0.1, // Cada item *dentro* de la tarjeta tendrá un retraso
+    },
+  },
+};
+
+// 4. Variante para los items internos (título y cada skill)
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { type: 'spring', stiffness: 120 },
+  },
+};
+
+
 export default function Skills() {
+  // 5. ¡Ya no se necesitan los hooks de 'isVisible', 'sectionRef' ni 'useEffect'!
+  
   const renderStars = (level) => {
     return [1, 2, 3].map((i) => (
       <FaStar key={i} className={`text-rojoletra ${i <= level ? 'opacity-100' : 'opacity-30'}`} />
@@ -41,32 +83,76 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="min-h-screen bg-transparent text-white flex flex-col justify-center items-center py-20 gap-12 px-4 md:px-6"
+      // 6. Quita la 'ref', mantiene 'overflow-hidden'
+      className="min-h-screen bg-transparent text-white flex flex-col justify-center items-center py-20 gap-12 px-4 md:px-6 overflow-hidden"
     >
-      <h2 className="text-6xl font-bold mb-4 text-rojoletra text-center">SKILLS</h2>
+      <motion.h2 
+        className="text-6xl font-bold mb-4 text-rojoletra text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6 }}
+      >
+        SKILLS
+      </motion.h2>
 
-      <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-12">
+      {/* 7. El contenedor del grid usa las variantes 'gridVariants' */}
+      <motion.div
+        className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-3 gap-8"
+        variants={gridVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }} // Inicia cuando el 20% del grid es visible
+      >
         {skillsData.map((category, index) => (
-          <div key={index} className="flex flex-col border-gray-700 md:border-l md:border-r px-4 items-center">
-            <h3 className="text-2xl font-semibold mb-6 text-center">{category.category}</h3>
-            <div className="flex flex-col gap-4 w-full">
+          // 8. Tarjeta con 'cardVariants' y estilo "glow"
+          <motion.div
+            key={index}
+            variants={cardVariants} // Usa la variante de tarjeta
+            whileHover={{ scale: 1.03, y: -5 }} // Micro-interacción
+            // Estilo "Glassmorphism" refinado
+            className="bg-white/5 backdrop-blur-lg rounded-xl p-6
+                       flex flex-col items-center
+                       border border-rojoletra/20 shadow-xl shadow-rojoletra/10
+                       hover:shadow-rojoletra/20 hover:border-rojoletra/50"
+            // 9. Ya no se necesita el 'style' para el transitionDelay
+          >
+            {/* 10. Título de la categoría animado */}
+            <motion.h3
+              variants={itemVariants}
+              className="text-2xl font-semibold mb-8 text-center text-rojoletra"
+            >
+              {category.category}
+            </motion.h3>
+            
+            {/* 11. Lista de skills (el 'stagger' viene del padre) */}
+            <div className="flex flex-col gap-5 w-full">
               {category.skills.map((skill) => (
-                <div key={skill.name} className="flex items-center gap-4 justify-between w-full">
-                  <div className="flex items-center gap-4 ">
+                // 12. Cada item de skill animado
+                <motion.div
+                  key={skill.name}
+                  variants={itemVariants} // Usa la variante de item
+                  className="flex items-center gap-4 w-full"
+                >
+                  {/* Contenedor del ícono */}
+                  <div className="bg-white/10 p-2 rounded-lg flex-shrink-0">
                     <img
-                    src={skill.imgUrl}
-                    alt={skill.name}
-                    className="w-16 h-16 object-contain img-white"
+                      src={skill.imgUrl}
+                      alt={skill.name}
+                      className="w-12 h-12 object-contain img-white" // Asumiendo que 'img-white' es una clase global tuya
                     />
-                    <p className="text-2xl text-gray-200 font-light">{skill.name}</p>
                   </div>
-                  <div className="flex gap-1">{renderStars(skill.level)}</div>
-                </div>
+                  {/* Contenedor para nombre y estrellas */}
+                  <div className="flex-grow">
+                    <p className="text-lg text-gray-100 font-medium">{skill.name}</p>
+                    <div className="flex gap-1 mt-1">{renderStars(skill.level)}</div>
+                  </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
